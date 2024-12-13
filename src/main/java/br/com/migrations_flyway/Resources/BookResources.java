@@ -19,7 +19,9 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -98,6 +100,28 @@ public class BookResources {
         book.setLaunch_date(dto.launch_date());
 
         return ResponseEntity.ok().body(book);
+    }
+
+    @PostMapping("/createBook")
+    @Operation(summary = "operation for create book",
+            description = "operation for create book",
+            tags = {"Books"},
+            responses = {@ApiResponse(description = "Success", responseCode = "200",
+                    content = @Content(schema = @Schema(implementation = Book.class))),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
+    public ResponseEntity<Book> createBook(@RequestBody BookDto dto, UriComponentsBuilder componentsBuilder) {
+        var book = bookService.createBook(dto);
+
+        book.setTitle(dto.title());
+        book.setAuthor(dto.author());
+        book.setPrice(dto.price());
+        book.setLaunch_date(dto.launch_date());
+
+        URI uri = componentsBuilder.path("/{id}").buildAndExpand(book.getKey()).toUri();
+
+        return ResponseEntity.created(uri).body(book);
     }
 
     @DeleteMapping("/{id}")

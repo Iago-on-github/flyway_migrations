@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry
                 .addMapping("/**")
                 //.allowedMethods("GET", "POST", "PUT")
-                .allowedOrigins("http://localhost:3000", "https://iago.com")
+                .allowedOrigins("http://localhost:3000", "http://localhost")
                 .allowedHeaders("*")
                 .allowedMethods("*")
                 .allowCredentials(true);
@@ -41,5 +41,6 @@ public class WebConfig implements WebMvcConfigurer {
                     .mediaType("json", MediaType.APPLICATION_JSON)
                     .mediaType("xml", MediaType.APPLICATION_XML)
                     .mediaType("x-yaml", MEDIA_TYPE_APPLICATION_YAML);
+
     }
 }

@@ -55,6 +55,17 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    public Book createBook(BookDto dto) {
+        Book book = new Book();
+
+        book.setTitle(dto.title());
+        book.setAuthor(dto.author());
+        book.setPrice(dto.price());
+        book.setLaunch_date(dto.launch_date());
+
+        return bookRepository.save(book);
+    }
+
     public void deleteBook (Integer id) {
         bookRepository.deleteById(id);
     }
