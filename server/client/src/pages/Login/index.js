@@ -27,7 +27,8 @@ export default function Login() {
             const response = await api.post('auth/signing', data);
 
             localStorage.setItem('username', username);
-            localStorage.setItem('accessToken', response.data.token);
+            localStorage.setItem('accessToken', response.data.body.accessToken);
+            console.log('Token salvo no LocalStorage:', response.data.body.accessToken);
 
             navigate('/books');
         } catch (err) {
